@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-service
+spec:
+  selector:
+    matchLabels:
+      app: hello
+      tier: backend
+      track: stable
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hello
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: backend-service
+          image: your-backend-service-image
+          env:
+            - name: DB_HOST
+              value: postgres-service
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: your_database_name
+            - name: DB_USERNAME
+              value: your_username
+            - name: DB_PASSWORD
+              value: your_password
+          resources:
+            limits:
+              memory: "4Gi"
+              cpu: "500m"
+            requests:
+              memory: "200Mi"
+              cpu: "100m"
